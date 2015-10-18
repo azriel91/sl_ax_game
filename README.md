@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/azriel91/sl_ax_game.svg?branch=master)](https://travis-ci.org/azriel91/sl_ax_game) [![Build status](https://ci.appveyor.com/api/projects/status/yf5vxm9053e9irol/branch/master?svg=true)](https://ci.appveyor.com/project/azriel91/sl-ax-game/branch/master) [![Build Status](https://webapi.biicode.com/v1/badges/azriel/azriel/sl_ax_game/master)](https://www.biicode.com/azriel/sl_ax_game)
+
 ## sl\_ax\_game
 
 Provides the game activity.
@@ -32,7 +34,7 @@ After cloning, in the repository directory run the following to build the block:
 
 ```bat
 git submodule update --init           # initialize git submodules
-bii-support/windows/build/shared.bat  # builds shared libraries
+bii-support\windows\build\shared.bat  # builds shared libraries
 ```
 
 The test executable will be output as `bin\azriel_sl_ax_game_test_main.exe`.
