@@ -21,7 +21,13 @@
 #ifndef __SL_AX_GAME__GAMEACTIVITY_H
 #define __SL_AX_GAME__GAMEACTIVITY_H
 
+#include <set>
+#include <memory>
+
 #include <azriel/sl_core_application/Activity.h>
+#include <azriel/sl_ax_game_object/Object.h>
+
+#include "../Game.h"
 
 US_USE_NAMESPACE
 
@@ -30,8 +36,10 @@ namespace ax {
 namespace game {
 
 class GameActivity : public sl::core::application::Activity {
+private:
+	std::shared_ptr<Game> game;
 public:
-	GameActivity();
+	GameActivity(std::shared_ptr<Game> game);
 	virtual ~GameActivity();
 
 	ExitCode run() override;

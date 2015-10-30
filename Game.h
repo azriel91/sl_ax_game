@@ -18,31 +18,34 @@
 
 =============================================================================*/
 
+#ifndef __SL_AX_GAME__GAME_H
+#define __SL_AX_GAME__GAME_H
+
+#include <set>
 #include <memory>
 
-#include "GameActivity.h"
-#include "GameActivityRegistration.h"
+#include <azriel/sl_ax_game_object/Object.h>
 
 namespace sl {
 namespace ax {
 namespace game {
 
-GameActivityRegistration::GameActivityRegistration() :
-		gameActivity(sl::core::application::ActivityPointer(
-			new sl::ax::game::GameActivity(std::shared_ptr<Game>(new Game())))) {
-}
+using ObjectZComparator =  bool(*)(std::shared_ptr<object::Object>, std::shared_ptr<object::Object>);
 
-GameActivityRegistration::~GameActivityRegistration() {
-}
-
-std::string GameActivityRegistration::getName() const {
-	return "sl::ax::game::GameActivity";
-}
-
-sl::core::application::ActivityPointer GameActivityRegistration::getActivity() const {
-	return this->gameActivity;
-}
+/**
+ * An game instance representing a match / stage / play through.
+ */
+class Game {
+private:
+	std::set<std::shared_ptr<object::Object>, ObjectZComparator> objects;
+public:
+	Game();
+	virtual ~Game();
+	std::set<std::shared_ptr<object::Object>, ObjectZComparator> getObjects() const;
+};
 
 } /* namespace game */
 } /* namespace ax */
 } /* namespace sl */
+
+#endif /* __SL_AX_GAME__GAME_H */

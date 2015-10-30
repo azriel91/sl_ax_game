@@ -20,13 +20,15 @@
 
 #include <cstdio>
 
+#include <azriel/sl_math/Point3D.hpp>
+
 #include "GameActivity.h"
 
 namespace sl {
 namespace ax {
 namespace game {
 
-GameActivity::GameActivity() {
+GameActivity::GameActivity(std::shared_ptr<Game> game) : game(game) {
 }
 
 GameActivity::~GameActivity() {
@@ -35,9 +37,21 @@ GameActivity::~GameActivity() {
 GameActivity::ExitCode GameActivity::run() {
 	printf("Running Game Activity\n");
 	printf("=====================\n");
-	printf("Reading from stdin:\n");
-	char str[80];
-	scanf("%79s",str);
+
+	auto objects = this->game->getObjects();
+	for (int i = 0; i < 5; ++i) {
+		std::shared_ptr<object::Object> myObject(new object::Object(i));
+		objects.insert(myObject);
+		Point3D<double> coordinates = myObject->getCoordinates();
+		coordinates += i * 10;
+		myObject->setCoordinates(coordinates);
+
+		printf("Reading from stdin:\n");
+		char str[80];
+		scanf("%79s",str);
+
+		printf("size: %lu\n", objects.size());
+	}
 	return ExitCode::SUCCESS;
 }
 

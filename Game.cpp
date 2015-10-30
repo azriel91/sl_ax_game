@@ -18,29 +18,26 @@
 
 =============================================================================*/
 
-#include <memory>
+#include <azriel/sl_math/Point3D.hpp>
 
-#include "GameActivity.h"
-#include "GameActivityRegistration.h"
+#include "Game.h"
 
 namespace sl {
 namespace ax {
 namespace game {
 
-GameActivityRegistration::GameActivityRegistration() :
-		gameActivity(sl::core::application::ActivityPointer(
-			new sl::ax::game::GameActivity(std::shared_ptr<Game>(new Game())))) {
+Game::Game() :
+		objects(std::set<std::shared_ptr<object::Object>, ObjectZComparator>(
+			[](std::shared_ptr<object::Object> obj1, std::shared_ptr<object::Object> obj2) {
+				return object::Object::isBehind(obj1.get(), obj2.get());
+			})) {
 }
 
-GameActivityRegistration::~GameActivityRegistration() {
+Game::~Game() {
 }
 
-std::string GameActivityRegistration::getName() const {
-	return "sl::ax::game::GameActivity";
-}
-
-sl::core::application::ActivityPointer GameActivityRegistration::getActivity() const {
-	return this->gameActivity;
+std::set<std::shared_ptr<object::Object>, ObjectZComparator> Game::getObjects() const {
+	return this->objects;
 }
 
 } /* namespace game */

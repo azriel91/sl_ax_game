@@ -5,7 +5,8 @@ include(biicode/cmake/tools)
 
 # Bii variables
 set(BII_LIB_DEPS ${BII_LIB_DEPS} azriel_cppmicroservices)
-set(BII_LIB_SRC impl/Activator.cpp
+set(BII_LIB_SRC Game.cpp
+                impl/Activator.cpp
                 impl/GameActivity.cpp
                 impl/GameActivityRegistration.cpp)
 set(BII_test_main_SRC test/main.cpp)
