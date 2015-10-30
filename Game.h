@@ -30,7 +30,9 @@ namespace sl {
 namespace ax {
 namespace game {
 
-using ObjectZComparator =  bool(*)(std::shared_ptr<object::Object>, std::shared_ptr<object::Object>);
+struct ObjectZComparator {
+	bool operator() (std::shared_ptr<object::Object> o1, std::shared_ptr<object::Object> o2) const;
+};
 
 /**
  * An game instance representing a match / stage / play through.
@@ -40,6 +42,10 @@ private:
 	std::set<std::shared_ptr<object::Object>, ObjectZComparator> objects;
 public:
 	Game();
+	Game(const Game& other);
+	Game(Game&& other);
+	Game& operator=(const Game& other);
+	Game& operator=(Game&& other);
 	virtual ~Game();
 	std::set<std::shared_ptr<object::Object>, ObjectZComparator> getObjects() const;
 };

@@ -26,11 +26,45 @@ namespace sl {
 namespace ax {
 namespace game {
 
-Game::Game() :
-		objects(std::set<std::shared_ptr<object::Object>, ObjectZComparator>(
-			[](std::shared_ptr<object::Object> obj1, std::shared_ptr<object::Object> obj2) {
-				return object::Object::isBehind(obj1.get(), obj2.get());
-			})) {
+bool ObjectZComparator::operator() (std::shared_ptr<object::Object> o1, std::shared_ptr<object::Object> o2) const {
+	return object::Object::isBehind(o1.get(), o2.get());
+}
+
+Game::Game() : objects(std::set<std::shared_ptr<object::Object>, ObjectZComparator>()) {
+}
+
+Game::Game(const Game& other) : objects(other.objects) {
+}
+
+Game::Game(Game&& other) : objects(other.objects) {
+	other.objects.clear();
+}
+
+Game& Game::operator=(const Game& other) {
+	// protect against invalid self-assignment
+	if (this != &other) {
+		// allocate new resources
+		std::set<std::shared_ptr<object::Object>, ObjectZComparator> nextObjects(other.objects);
+
+		// clear old resources
+		this->objects.clear();
+
+		// assign new resources to this
+		this->objects = nextObjects;
+	}
+	return *this;
+}
+
+Game& Game::operator=(Game&& other) {
+	// protect against invalid self-assignment
+	if (this != &other) {
+		// clear old resources
+		this->objects.clear();
+
+		// steal resources from other
+		this->objects.swap(other.objects);
+	}
+	return *this;
 }
 
 Game::~Game() {
